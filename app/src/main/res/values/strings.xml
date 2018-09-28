@@ -1,6 +1,3 @@
 <resources>
     <string name="app_name">Java Devs</string>
-    <string name="user_organization">User Organization</string>
-    <string name="user_name">User Name</string>
-    <string name="user_image">User image goes here</string>
 </resources>
