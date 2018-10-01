@@ -3,6 +3,7 @@ import com.google.gson.annotations.SerializedName;
 
 /**
  * Class to hold response Data
+ *
  */
 public class Data {
 
