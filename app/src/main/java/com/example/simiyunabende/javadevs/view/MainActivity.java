@@ -1,10 +1,12 @@
-package com.example.simiyunabende.javadevs;
+package com.example.simiyunabende.javadevs.view;
 
 import android.content.Intent;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.LinearLayout;
+
+import com.example.simiyunabende.javadevs.R;
 
 public class MainActivity extends AppCompatActivity implements View.OnClickListener {
 
