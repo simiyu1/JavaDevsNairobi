@@ -12,7 +12,7 @@ import retrofit2.http.GET;
  */
 public interface GithubAPI {
 
-    @GET("?q=location%3ANairobi")
-    Call<Data> getResults();
+    @GET("/search/users?q=language:java+location:nairobi")
+    Call<Data> getItems();
 
 }

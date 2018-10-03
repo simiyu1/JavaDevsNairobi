@@ -1,21 +1,27 @@
 package com.example.simiyunabende.javadevs.model;
+import com.google.gson.annotations.Expose;
 import com.google.gson.annotations.SerializedName;
 
-class GithubUsers {
+public class GithubUsers {
 
     @SerializedName("login")
+    @Expose
     private String username;
 
     @SerializedName("avatar_url")
+    @Expose
     private String imageUrl;
 
     @SerializedName("followers_url")
+    @Expose
     private String followersUrl;
 
     @SerializedName("organizations_url")
+    @Expose
     private String orgsUrl;
 
     @SerializedName("repos_url")
+    @Expose
     private String reposUrl;
 
     public GithubUsers(String username, String imageUrl, String followersUrl, String reposUrl, String orgsUrl) {
