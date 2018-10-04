@@ -1,16 +1,23 @@
 package com.example.simiyunabende.javadevs.model;
+
+import com.google.gson.annotations.Expose;
 import com.google.gson.annotations.SerializedName;
+
+import java.util.ArrayList;
 
 /**
  * Class to hold response Data
  *
  */
+
+
 public class Data {
 
-    @SerializedName("GithubUsersResponse")
-    private GithubUsersResponse githubUsersResponse;
+    @SerializedName("items")
+    @Expose
+    private ArrayList<GithubUsers> restResponse;
 
-    public GithubUsersResponse getGithubUsersResponse() {
-        return githubUsersResponse;
+    public ArrayList<GithubUsers> getRestResponse() {
+        return restResponse;
     }
 }
