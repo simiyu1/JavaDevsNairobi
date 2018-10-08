@@ -25,6 +25,7 @@
                 android:layout_width="100dp"
                 android:layout_height="match_parent"
                 android:padding="5dp"
+                android:id="@+id/img_avatar"
                 android:src="@drawable/ic_image_holder" />
 
             <LinearLayout
@@ -33,7 +34,7 @@
                 android:orientation="vertical">
 
                 <TextView
-                    android:id="@+id/username"
+                    android:id="@+id/txtusername"
                     android:layout_width="match_parent"
                     android:layout_height="58dp"
                     android:hint="Username"
@@ -45,14 +46,14 @@
                     android:orientation="horizontal">
 
                     <TextView
-                        android:id="@+id/repostats"
+                        android:id="@+id/txtrepostats"
                         android:layout_width="125dp"
                         android:layout_height="57dp"
                         android:hint="Repo stats"
                         android:padding="10dp" />
 
                     <TextView
-                        android:id="@+id/followerstats"
+                        android:id="@+id/txtfollowerstats"
                         android:layout_width="199dp"
                         android:layout_height="57dp"
                         android:hint="followers stats"
