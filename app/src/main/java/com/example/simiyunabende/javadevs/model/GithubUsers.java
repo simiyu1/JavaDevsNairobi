@@ -2,6 +2,9 @@ package com.example.simiyunabende.javadevs.model;
 import com.google.gson.annotations.Expose;
 import com.google.gson.annotations.SerializedName;
 
+/**
+ * This class defines the User (GithubUsers)
+ */
 public class GithubUsers {
 
     @SerializedName("login")
