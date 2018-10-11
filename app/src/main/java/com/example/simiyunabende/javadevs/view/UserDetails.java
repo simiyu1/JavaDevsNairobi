@@ -10,5 +10,9 @@ public class UserDetails extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.user_details);
+        //TODO 5 call populateUserDetails()
     }
+
+    //TODO 6 implement populateUserDetails
+    //TODO 7 implement SetImage with Picasso for the Prof Image
 }

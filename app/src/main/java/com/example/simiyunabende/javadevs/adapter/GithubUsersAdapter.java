@@ -8,15 +8,20 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
-import android.widget.RelativeLayout;
+import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import com.example.simiyunabende.javadevs.R;
 import com.example.simiyunabende.javadevs.model.GithubUsers;
+import com.example.simiyunabende.javadevs.view.ImageCircleTransform;
 import com.example.simiyunabende.javadevs.view.UserDetails;
 import com.squareup.picasso.Picasso;
 
 import java.util.List;
+
+/**
+ * Adapter Class that Binds a single GitHubUser list to the recyclerview
+ */
 
 public class GithubUsersAdapter extends RecyclerView.Adapter<GithubUsersAdapter.ViewHolder> {
 
@@ -27,7 +32,7 @@ public class GithubUsersAdapter extends RecyclerView.Adapter<GithubUsersAdapter.
         ImageView userAvatar;
         TextView userName;
         TextView userRepos;
-        RelativeLayout userLayout;
+        LinearLayout userLayout;
 
         public ViewHolder(View itemView) {
             super(itemView);
@@ -44,7 +49,7 @@ public class GithubUsersAdapter extends RecyclerView.Adapter<GithubUsersAdapter.
         this.mContext = mContext;
     }
 
-    // Create new views (invoked by the layout manager)
+    // Invoke the layout manager to create new views
     @NonNull
     @Override
     public GithubUsersAdapter.ViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
@@ -53,7 +58,7 @@ public class GithubUsersAdapter extends RecyclerView.Adapter<GithubUsersAdapter.
         return holder;
     }
 
-    // Replace the contents of a view (invoked by the layout manager)
+    // Binds view contents to data
     @NonNull
     @Override
     public void onBindViewHolder(@NonNull final ViewHolder holder, int position) {
@@ -70,9 +75,14 @@ public class GithubUsersAdapter extends RecyclerView.Adapter<GithubUsersAdapter.
 
             }
         });
-        //Picasso.get().load(url).into(view);
+
+        //Picasso handles images (abstracts caching)
         Picasso.with(mContext)
                 .load(githubUser.getImageUrl())
+                .error(R.drawable.ic_image_holder)
+                .placeholder(R.drawable.ic_image_holder)
+                .resize(200,200)
+                .transform(new ImageCircleTransform())
                 .into(holder.userAvatar);
 
         holder.userName.setText(githubUser.getUsername());
