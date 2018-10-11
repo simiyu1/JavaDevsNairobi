@@ -4,12 +4,12 @@ import android.content.Context;
 
 import com.example.simiyunabende.javadevs.model.GithubUsers;
 
-import java.util.List;
+import java.util.ArrayList;
 
 public interface GithubUserView{
 
     interface MainView {
-        void displayGithubUsers(List<GithubUsers> githubUsersList);
+        void displayGithubUsers(ArrayList<GithubUsers> githubUsersList);
 
         void dismissDialog(String fetchStatus);
         //TODO 3 add dismiss dialog
