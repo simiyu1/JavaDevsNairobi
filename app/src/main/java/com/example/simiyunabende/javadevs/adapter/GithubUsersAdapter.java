@@ -17,7 +17,7 @@ import com.example.simiyunabende.javadevs.view.ImageCircleTransform;
 import com.example.simiyunabende.javadevs.view.UserDetails;
 import com.squareup.picasso.Picasso;
 
-import java.util.List;
+import java.util.ArrayList;
 
 /**
  * Adapter Class that Binds a single GitHubUser list to the recyclerview
@@ -25,7 +25,7 @@ import java.util.List;
 
 public class GithubUsersAdapter extends RecyclerView.Adapter<GithubUsersAdapter.ViewHolder> {
 
-    private List<GithubUsers> githubUsersList;
+    private ArrayList<GithubUsers> githubUsersList;
     private Context mContext;
 
     public static class ViewHolder extends RecyclerView.ViewHolder {
@@ -44,7 +44,7 @@ public class GithubUsersAdapter extends RecyclerView.Adapter<GithubUsersAdapter.
 
     }
 
-    public GithubUsersAdapter(List<GithubUsers> githubUsers, Context mContext) {
+    public GithubUsersAdapter(ArrayList<GithubUsers> githubUsers, Context mContext) {
         this.githubUsersList = githubUsers;
         this.mContext = mContext;
     }
