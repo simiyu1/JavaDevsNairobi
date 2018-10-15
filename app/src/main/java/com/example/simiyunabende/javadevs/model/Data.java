@@ -20,4 +20,7 @@ public class Data {
     public ArrayList<GithubUsers> getRestResponse() {
         return restResponse;
     }
+    public void setUsers(ArrayList<GithubUsers> githubUsers) {
+        this.restResponse = githubUsers;
+    }
 }
