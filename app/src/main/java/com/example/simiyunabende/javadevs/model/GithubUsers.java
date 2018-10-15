@@ -30,6 +30,8 @@ public class GithubUsers implements Parcelable{
     @Expose
     private String reposUrl;
 
+    public GithubUsers(){}
+
     public GithubUsers(String username, String imageUrl, String followersUrl, String reposUrl, String orgsUrl) {
         this.username = username;
         this.imageUrl = imageUrl;
@@ -83,7 +85,7 @@ public class GithubUsers implements Parcelable{
     }
 
     public String getOrgsUrll() {
-        return reposUrl;
+        return orgsUrl;
     }
 
     public void setOrgsUrl(String orgsUrl) {
