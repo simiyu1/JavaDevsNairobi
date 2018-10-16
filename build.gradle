@@ -8,8 +8,9 @@ buildscript {
         mavenCentral()
     }
     dependencies {
-        classpath 'com.android.tools.build:gradle:3.1.4'
+        classpath 'com.android.tools.build:gradle:3.2.1'
         classpath 'com.vanniktech:gradle-android-junit-jacoco-plugin:0.6.0'
+        classpath 'org.jacoco:org.jacoco.core:0.8.0'
         
 
         // NOTE: Do not place your application dependencies here; they belong
@@ -18,7 +19,6 @@ buildscript {
 }
 
 allprojects {
-    apply plugin: 'jacoco'
     repositories {
         google()
         mavenLocal()
@@ -55,9 +55,29 @@ rulesVersion = '1.0.2'
 espressoVersion = '3.0.2'
 recyclerviewVersion = '28.0.0'
 designVersion = '28.0.0'
+espressoContrib= '2.2.2'
 
 }
 
 
 apply plugin: 'com.vanniktech.android.junit.jacoco'
 
+
+task codeCoverageReport(type: JacocoReport) {
+    executionData fileTree(project.rootDir.absolutePath).include("**/build/jacoco/*.exec")
+
+//    subprojects.each {
+//        sourceSets it.sourceSets.main
+//    }
+
+    reports {
+        xml.enabled true
+        xml.destination file("${buildDir}/reports/coverage/debug/report.xml")
+        html.enabled false
+        csv.enabled false
+    }
+}
+
+codeCoverageReport.dependsOn {
+    subprojects*.test
+}

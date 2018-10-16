@@ -1,4 +1,4 @@
-[![Maintainability](https://api.codeclimate.com/v1/badges/2155307b6924881d976d/maintainability)](https://codeclimate.com/github/simiyu1/JavaDevsNairobi/maintainability) [![Test Coverage](https://api.codeclimate.com/v1/badges/2155307b6924881d976d/test_coverage)](https://codeclimate.com/github/simiyu1/JavaDevsNairobi/test_coverage) [![CircleCI](https://circleci.com/gh/simiyu1/JavaDevsNairobi.svg?style=svg)](https://circleci.com/gh/simiyu1/JavaDevsNairobi)
+[![Maintainability](https://api.codeclimate.com/v1/badges/2155307b6924881d976d/maintainability)](https://codeclimate.com/github/simiyu1/JavaDevsNairobi/maintainability) [![Test Coverage](https://api.codeclimate.com/v1/badges/2155307b6924881d976d/test_coverage)](https://codeclimate.com/github/simiyu1/JavaDevsNairobi/test_coverage) [![CircleCI](https://circleci.com/gh/simiyu1/JavaDevsNairobi/tree/develop.svg?style=svg)](https://circleci.com/gh/simiyu1/JavaDevsNairobi/tree/develop)
 
 # Java Developers Nairobi
 

@@ -69,7 +69,7 @@ public class PresenterTest {
     public void testGetGithubUsers(){
         githubPresenter.getGithubUsers();
 
-        GithubUsers githubUsers1 = new GithubUsers("username", "imageUrl", "followersUrl", "reposUrl", "orgsUrl");
+        GithubUsers githubUsers1 = new GithubUsers("username", "imageUrl", "followersUrl", "reposUrl", "orgsUrl", "htmlUrl");
 
         ArrayList<GithubUsers> arrayList = new ArrayList<>();
         arrayList.add(githubUsers1);
