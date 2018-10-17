@@ -1,0 +1,83 @@
+# This file contains the fastlane.tools configuration
+# You can find the documentation at https://docs.fastlane.tools
+#
+# For a list of all available actions, check out
+#
+#     https://docs.fastlane.tools/actions
+#
+# For a list of all available plugins, check out
+#
+#     https://docs.fastlane.tools/plugins/available-plugins
+#
+
+# Uncomment the line if you want fastlane to automatically update itself
+# update_fastlane
+
+default_platform(:android)
+
+platform :android do
+
+  desc "Common setup for all lanes"
+    before_all do |lane, options|
+      ENV["SLACK_URL"] = "https://hooks.slack.com/services/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"
+    end
+
+  desc "Runs all the tests"
+  lane :test do
+    gradle(task: "test")
+  end
+
+  desc "Submit a new Beta Build to Crashlytics Beta"
+  lane :beta do
+    gradle(task: "clean assembleRelease")
+    crashlytics
+  
+    # sh "your_script.sh"
+    # You can also use other beta testing services here
+  end
+
+  desc "Deploy a new version to the Google Play"
+  lane :deploy do
+    gradle(task: "clean assembleRelease")
+    upload_to_play_store
+  end
+
+  desc "Custom send to Google PlayStore"
+  lane :playstore do
+    gradle(
+      task: 'assemble',
+      build_type: 'Release'
+    )
+    upload_to_play_store
+  end
+
+ desc "Upload the latest output APK to #converge-codelab-qa Slack channel"
+     private_lane :upload_to_slack do |options|
+         full_file_path = lane_context[SharedValues::GRADLE_APK_OUTPUT_PATH]
+         file_name = full_file_path.gsub(/\/.*\//,"")
+         token =  ENV["SLACK_API_TOKEN"]
+         channel = ENV["SLACK_CHANNEL"]
+         sh "echo Uploading " + file_name + " to #converge-codelab-qa Slack"
+         sh "curl https://slack.com/api/files.upload -F token=\"" + token + "\" -F channels=\""+ channel + "\" -F title=\"" + file_name + "\" -F filename=\"" + file_name + "\" -F file=@" + full_file_path
+     end
+
+  lane :slackbuild do
+    gradle(task: "assembleRelease")
+    slack(message: "Build Successful!")
+    upload_to_slack()
+  end
+
+  after_all do |lane|
+      file_name = lane_context[SharedValues::GRADLE_APK_OUTPUT_PATH].gsub(/\/.*\//,"")
+      slack(
+        message: "Successfully deployed new JavaDevsNai Update! :champagne:",
+        payload: {
+          # Optional, lets you specify any number of your own Slack attachments.
+          "Build Date" => Time.new.to_s,
+          "APK" => file_name
+        }
+      )
+      end
+
+end
+
