@@ -30,12 +30,17 @@ public class GithubUsers implements Parcelable{
     @Expose
     private String reposUrl;
 
-    public GithubUsers(String username, String imageUrl, String followersUrl, String reposUrl, String orgsUrl) {
+    @SerializedName("html_url")
+    @Expose
+    private String htmlUrl;
+
+    public GithubUsers(String username, String imageUrl, String followersUrl, String reposUrl, String orgsUrl, String htmlUrl) {
         this.username = username;
         this.imageUrl = imageUrl;
         this.followersUrl = followersUrl;
         this.reposUrl = reposUrl;
         this.orgsUrl = orgsUrl;
+        this.htmlUrl = htmlUrl;
     }
 
     public static final Creator<GithubUsers> CREATOR = new Creator<GithubUsers>() {
@@ -82,19 +87,29 @@ public class GithubUsers implements Parcelable{
         this.reposUrl = reposUrl;
     }
 
-    public String getOrgsUrll() {
-        return reposUrl;
+    public String getOrgsUrl() {
+        return orgsUrl;
     }
 
     public void setOrgsUrl(String orgsUrl) {
         this.orgsUrl = orgsUrl;
     }
+
+    public String getHtmlUrl() {
+        return htmlUrl;
+    }
+
+    public void setHtmlUrl(String htmlUrl) {
+        this.htmlUrl = htmlUrl;
+    }
+
     public GithubUsers(Parcel in) {
         username = in.readString();
         imageUrl = in.readString();
         reposUrl = in.readString();
         followersUrl = in.readString();
         orgsUrl = in.readString();
+        htmlUrl = in.readString();
         //owner = in.readParcelable(GithubUsers.class.getClassLoader());
     }
 
@@ -110,5 +125,6 @@ public class GithubUsers implements Parcelable{
         out.writeString(reposUrl);
         out.writeString(followersUrl);
         out.writeString(orgsUrl);
+        out.writeString(htmlUrl);
     }
 }
