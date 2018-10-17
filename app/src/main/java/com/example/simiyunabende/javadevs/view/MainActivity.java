@@ -1,7 +1,10 @@
 package com.example.simiyunabende.javadevs.view;
 
+import android.app.ProgressDialog;
+import android.support.design.widget.Snackbar;
 import android.content.Context;
 import android.os.Bundle;
+import android.support.v4.widget.SwipeRefreshLayout;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
@@ -11,6 +14,7 @@ import com.example.simiyunabende.javadevs.R;
 import com.example.simiyunabende.javadevs.adapter.GithubUsersAdapter;
 import com.example.simiyunabende.javadevs.model.GithubUsers;
 import com.example.simiyunabende.javadevs.presenter.GithubPresenter;
+import com.example.simiyunabende.javadevs.utils.NetworkConnectivityManager;
 
 import java.util.ArrayList;
 
@@ -24,11 +28,39 @@ public class MainActivity extends AppCompatActivity implements GithubUserView.Ma
     private RecyclerView.Adapter adapter;
     private RecyclerView.LayoutManager myLayoutManager;
     GithubUserView.MainPresenter githubPresenter = new GithubPresenter(this);
+    SwipeRefreshLayout swipeRefreshLayout;
+    ProgressDialog progressDialog;
+    NetworkConnectivityManager networkConnectivityManager;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
+        // Add swiping and Network checks
+        swipeRefreshLayout = findViewById(R.id.ly_swipe_to_refresh);
+        networkConnectivityManager = new NetworkConnectivityManager();
+        swipeRefreshLayout.setOnRefreshListener(new SwipeRefreshLayout.OnRefreshListener() {
+            @Override
+            public void onRefresh() {
+                progressDialog = new ProgressDialog(MainActivity.this);
+                // no need to show progress if it is established there is no network
+                if(!networkConnectivityManager.isConnected(MainActivity.this)){
+                    Snackbar.make(findViewById(R.id.ly_main_activity), "CHECK YOUR INTERNET", Snackbar.LENGTH_LONG).show();
+                    progressDialog.setMessage("Network error");
+                    progressDialog.show();
+                }
+                else if(networkConnectivityManager.isConnected(MainActivity.this)){
+                    progressDialog.setMessage("Connecting");
+                    progressDialog.show();
+                    fetchUsers();
+                }
+            }
+        });
+
+        if(!networkConnectivityManager.isConnected(this)){
+            Snackbar.make(findViewById(R.id.ly_main_activity), "CHECK YOUR INTERNET", Snackbar.LENGTH_LONG).show();
+        }
+
         myRecyclerView = findViewById(R.id.recyclerview);
 
         if (savedInstanceState != null) {
@@ -38,6 +70,12 @@ public class MainActivity extends AppCompatActivity implements GithubUserView.Ma
         else {
             githubPresenter.getGithubUsers();
         }
+    }
+
+    private void fetchUsers() {
+        githubPresenter.getGithubUsers();
+        swipeRefreshLayout.setRefreshing(false);
+        progressDialog.dismiss();
     }
 
     @Override
