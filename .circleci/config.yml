@@ -8,6 +8,12 @@ jobs:
     docker:
       # specify the version you desire here
       - image: circleci/android:api-28-node8-alpha
+        environment:
+              # Customize the JVM maximum heap limit
+              JVM_OPTS: -Xmx3200m
+              TERM: dumb
+              CC_TEST_REPORTER_ID: f0fbf63a31dc58d479511481daeb30e5fe79997751b96720a47547f03f0eb8c4
+
 
       # Specify service dependencies here if necessary
       # CircleCI maintains a library of pre-built images
@@ -16,11 +22,6 @@ jobs:
 
     working_directory: ~/repo
 
-    environment:
-      # Customize the JVM maximum heap limit
-      JVM_OPTS: -Xmx3200m
-      TERM: dumb
-      CC_TEST_REPORTER_ID: f0fbf63a31dc58d479511481daeb30e5fe79997751b96720a47547f03f0eb8c4
 
     steps:
       - checkout
@@ -32,12 +33,6 @@ jobs:
       - run:
           name: Download Dependencies
           command: ./gradlew androidDependencies
-      # Adding codeclimate reporter
-      - run:
-          name: Setup Code Climate test-reporter
-          command: |
-            curl -L https://codeclimate.com/downloads/test-reporter/test-reporter-latest-linux-amd64 > ./cc-test-reporter
-            chmod +x ./cc-test-reporter
 
       - save_cache:
           paths:
@@ -70,9 +65,19 @@ jobs:
             curl -L https://codeclimate.com/downloads/test-reporter/test-reporter-latest-linux-amd64 > ./cc-test-reporter
             chmod +x ./cc-test-reporter
 
+#      - run:
+#          name: Generate JaCoCo report
+#          command: ./gradlew clean jacocoTestReportDebug
+#      - run:
+#          name: Upload coverage to code climate
+#          command: |
+#            JACOCO_SOURCE_PATH=app/src/main/java
+#            ./cc-test-reporter --debug format-coverage app/build/reports/jacoco/debug/jacoco.xml -t jacoco --prefix /home/rof/src/github.com/simiyu1/JavaDevsNairobi/blob/ft-share-profile-156008359
+#            ./cc-test-reporter --debug upload-coverage
+
       - run:
           name: Generate JaCoCo report
-          command: ./gradlew -PciBuild=true jacocoTestReportDebug
+          command: ./gradlew -PciBuild=true clean jacocoTestReportDebug
 
       - run:
           name: Upload coverage report to CodeCov
@@ -84,3 +89,50 @@ jobs:
 
       - store_test_results:
           path: app/build/test-results
+
+"Execute tests on Ubuntu":
+    environment:
+      CIRCLE_TEST_REPORTS: ~/test-reports
+      LC_ALL: C.UTF-8
+      LANG: C.UTF-8
+      FASTLANE_ITUNES_TRANSPORTER_PATH: .bundle
+    docker:
+      - image: fastlanetools/fastlane:2.3.4
+    steps:
+      - checkout
+
+      - restore_cache:
+          key: v1-ubuntu-gems-{{ checksum "Gemfile" }}-{{ checksum "fastlane.gemspec" }}
+      - run:
+          name: Setup Build
+          command: |
+            mkdir -p ~/test-reports
+            bundle check --path .bundle || bundle install --jobs=4 --retry=3 --path .bundle
+      - save_cache:
+          key: v1-ubuntu-gems-{{ checksum "Gemfile" }}-{{ checksum "fastlane.gemspec" }}
+          paths:
+            - .bundle
+
+      - run:
+          name: Check PR Metadata
+          command: bundle exec danger || echo "danger failed"
+
+      - restore_cache:
+          key: v1-{{ arch }}-rubocop
+
+      - run: bundle exec fastlane slackbuild
+
+      - save_cache:
+          key: v1-{{ arch }}-rubocop
+          paths:
+            - ~/.cache/rubocop_cache
+      - store_test_results:
+          path: ~/test-reports
+      - store_artifacts:
+          path: ~/test-reports/rspec
+          destination: test-reports
+
+      - run:
+          name: Post Test Results to GitHub
+          command: bundle exec danger || echo "danger failed"
+          when: always # Run this even when tests fail

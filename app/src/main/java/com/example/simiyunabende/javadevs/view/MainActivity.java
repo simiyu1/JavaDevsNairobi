@@ -48,6 +48,7 @@ public class MainActivity extends AppCompatActivity implements GithubUserView.Ma
                     Snackbar.make(findViewById(R.id.ly_main_activity), "CHECK YOUR INTERNET", Snackbar.LENGTH_LONG).show();
                     progressDialog.setMessage("Network error");
                     progressDialog.show();
+                    progressDialog.dismiss();
                 }
                 else if(networkConnectivityManager.isConnected(MainActivity.this)){
                     progressDialog.setMessage("Connecting");
@@ -73,9 +74,9 @@ public class MainActivity extends AppCompatActivity implements GithubUserView.Ma
     }
 
     private void fetchUsers() {
-        githubPresenter.getGithubUsers();
         swipeRefreshLayout.setRefreshing(false);
         progressDialog.dismiss();
+        githubPresenter.getGithubUsers();
     }
 
     @Override
