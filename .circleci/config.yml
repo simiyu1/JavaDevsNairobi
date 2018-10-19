@@ -9,10 +9,14 @@ jobs:
       # specify the version you desire here
       - image: circleci/android:api-28-node8-alpha
         environment:
-              # Customize the JVM maximum heap limit
-              JVM_OPTS: -Xmx3200m
-              TERM: dumb
-              CC_TEST_REPORTER_ID: f0fbf63a31dc58d479511481daeb30e5fe79997751b96720a47547f03f0eb8c4
+            # Customize the JVM maximum heap limit
+            JVM_OPTS: -Xmx3200m
+            TERM: dumb
+            CC_TEST_REPORTER_ID: f0fbf63a31dc58d479511481daeb30e5fe79997751b96720a47547f03f0eb8c4
+
+        dependencies:
+            pre:
+                - source environmentSetup.sh && copyEnvVarsToGradleProperties
 
 
       # Specify service dependencies here if necessary
@@ -20,7 +24,7 @@ jobs:
       # documented at https://circleci.com/docs/2.0/circleci-images/
       # - image: circleci/postgres:9.4
 
-    working_directory: ~/repo
+    working_directory: ~/JavaDevsNairobi
 
 
     steps:
@@ -75,20 +79,68 @@ jobs:
 #            ./cc-test-reporter --debug format-coverage app/build/reports/jacoco/debug/jacoco.xml -t jacoco --prefix /home/rof/src/github.com/simiyu1/JavaDevsNairobi/blob/ft-share-profile-156008359
 #            ./cc-test-reporter --debug upload-coverage
 
+
+      - run:
+          name: Setup Code Climate test-reporter
+          command: |
+            curl -L https://codeclimate.com/downloads/test-reporter/test-reporter-latest-linux-amd64 > ./cc-test-reporter
+            chmod +x ./cc-test-reporter
       - run:
           name: Generate JaCoCo report
-          command: ./gradlew -PciBuild=true clean jacocoTestReportDebug
-
+          command: ./gradlew jacocoTestReport --debug
       - run:
-          name: Upload coverage report to CodeCov
+          name: Upload coverage to code climate
           command: bash <(curl -s https://codecov.io/bash)
-
+#          command: |
+#            export JACOCO_SOURCE_PATH=app/src/main/java
+#            ./cc-test-reporter format-coverage app/build/reports/coverage/debug/report.xml
+#            ./cc-test-reporter upload-coverage
       - store_artifacts:
-          path: collect_app/build/reports/
-          destination: /reports/
-
+          path: app/build/reports
+          destination: reports
       - store_test_results:
           path: app/build/test-results
+#      - run:
+#          name: Generate JaCoCo report
+#          command: ./gradlew -PciBuild=true clean jacocoTestReportDebug
+## set up xml path for code climate
+#      - run:
+#          name: Set jacoco.xml path for code climate
+#          command: JACOCO_SOURCE_PATH=src/main/java ./cc-test-reporter format-coverage ./build/reports/jacoco/test/jacoco.xml --input-type jacoco
+
+#       upload coverage on code climate
+#      - run:
+#          name: Upload code climate report
+#          command: ./cc-test-reporter upload-coverage -r $CC_TEST_REPORTER_ID
+#          when: on_success
+#      - run:
+#          name: Upload coverage report to CodeCov
+#          command: bash <(curl -s https://codecov.io/bash)
+#
+#      - store_artifacts:
+#          path: collect_app/build/reports/
+#          destination: /reports/
+#
+#      - store_test_results:
+#          path: app/build/test-results
+#
+#      - run:
+#          name: Generate JaCoCo report
+#          command: ./gradlew jacocoTestReport
+#      - run:
+#          name: Upload coverage to code climate
+#          command: |
+#             export JACOCO_SOURCE_PATH=app/src/main/java
+#             ./cc-test-reporter format-coverage app/build/reports/jacoco/jacocoTestReport/jacocoTestReport.xml -t jacoco
+#             ./cc-test-reporter upload-coverage
+##       upload coverage on code climate
+#      - run:
+#          name: Upload code climate report
+#          command: ./cc-test-reporter upload-coverage -r $CC_TEST_REPORTER_ID
+#          when: on_success
+#      - run:
+#          name: Upload coverage report to CodeCov
+#          command: bash <(curl -s https://codecov.io/bash)
 
 "Execute tests on Ubuntu":
     environment:

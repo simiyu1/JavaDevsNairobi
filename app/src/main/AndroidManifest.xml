@@ -20,6 +20,15 @@
             </intent-filter>
         </activity>
         <activity android:name=".view.UserDetails"/>
+        <uses-library android:name="android.test.runner" />
+        <uses-library android:name="android.test.base"
+            android:required="false" />
+        <uses-library android:name="android.test.mock"
+            android:required="false" />
     </application>
+    <!--<instrumentation-->
+        <!--android:name="com.example.simiyunabende.javadevs"-->
+        <!--android:targetPackage="com.example.simiyunabende.javadevs.view"/>-->
+
 
 </manifest>
