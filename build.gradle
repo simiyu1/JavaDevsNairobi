@@ -81,3 +81,4 @@ task codeCoverageReport(type: JacocoReport) {
 codeCoverageReport.dependsOn {
     subprojects*.test
 }
+apply plugin: 'android-reporting'

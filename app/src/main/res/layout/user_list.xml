@@ -3,16 +3,15 @@
 <LinearLayout
     android:id="@+id/user_list_layout"
     android:layout_width="match_parent"
-    android:layout_height="100dp"
+    android:layout_height="wrap_content"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:orientation="horizontal"
     xmlns:android="http://schemas.android.com/apk/res/android"
-    android:paddingTop="5dp"
-    android:paddingBottom="5dp">
+    android:padding="5dp">
 
     <android.support.v7.widget.CardView
-        android:layout_width="wrap_content"
-        android:layout_height="match_parent"
+        android:layout_width="match_parent"
+        android:layout_height="213dp"
         android:outlineAmbientShadowColor="@color/cardview_dark_background"
         android:padding="15dp"
         app:cardCornerRadius="4dp"
@@ -21,45 +20,50 @@
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            android:orientation="horizontal">
+            android:orientation="vertical">
 
             <ImageView
-                android:layout_width="100dp"
-                android:layout_height="match_parent"
-                android:padding="5dp"
                 android:id="@+id/img_avatar"
+                android:layout_width="100dp"
+                android:layout_height="100dp"
+                android:layout_gravity="center"
+                android:padding="5dp"
                 android:src="@drawable/ic_image_holder" />
 
             <LinearLayout
-                android:layout_width="284dp"
-                android:layout_height="match_parent"
+                android:id="@+id/contents"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
                 android:orientation="vertical">
 
                 <TextView
                     android:id="@+id/txtusername"
                     android:layout_width="match_parent"
                     android:layout_height="58dp"
+                    android:gravity="center"
                     android:hint="Username"
-                    android:padding="10dp" />
+                    android:padding="2dp" />
 
                 <LinearLayout
-                    android:layout_width="284dp"
+                    android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:orientation="horizontal">
+                    android:orientation="vertical">
 
                     <TextView
                         android:id="@+id/txtrepostats"
-                        android:layout_width="125dp"
-                        android:layout_height="57dp"
+                        android:layout_width="match_parent"
+                        android:layout_height="0dp"
+                        android:layout_weight="1"
                         android:hint="Repo stats"
-                        android:padding="10dp" />
+                        android:padding="3dp" />
 
                     <TextView
                         android:id="@+id/txtfollowerstats"
-                        android:layout_width="199dp"
-                        android:layout_height="57dp"
+                        android:layout_width="match_parent"
+                        android:layout_height="0dp"
+                        android:layout_weight="1"
                         android:hint="followers stats"
-                        android:padding="10dp" />
+                        android:padding="3dp" />
                 </LinearLayout>
 
             </LinearLayout>

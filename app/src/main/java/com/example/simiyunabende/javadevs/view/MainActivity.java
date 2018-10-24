@@ -1,12 +1,12 @@
 package com.example.simiyunabende.javadevs.view;
 
 import android.app.ProgressDialog;
-import android.support.design.widget.Snackbar;
 import android.content.Context;
 import android.os.Bundle;
+import android.support.design.widget.Snackbar;
 import android.support.v4.widget.SwipeRefreshLayout;
 import android.support.v7.app.AppCompatActivity;
-import android.support.v7.widget.LinearLayoutManager;
+import android.support.v7.widget.GridLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.util.Log;
 
@@ -98,7 +98,8 @@ public class MainActivity extends AppCompatActivity implements GithubUserView.Ma
 
     public void displayGithubUsers(ArrayList<GithubUsers> githubUsersList){
         githubUsers = githubUsersList;
-        myLayoutManager =  new LinearLayoutManager(this);
+        //myLayoutManager =  new LinearLayoutManager(this);
+        myLayoutManager = new GridLayoutManager(this,2);
         myRecyclerView.setLayoutManager(myLayoutManager);
         adapter = new GithubUsersAdapter(githubUsers, this);
         myRecyclerView.setAdapter(adapter);
