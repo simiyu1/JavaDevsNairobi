@@ -65,16 +65,6 @@ jobs:
             curl -L https://codeclimate.com/downloads/test-reporter/test-reporter-latest-linux-amd64 > ./cc-test-reporter
             chmod +x ./cc-test-reporter
 
-#      - run:
-#          name: Generate JaCoCo report
-#          command: ./gradlew clean jacocoTestReportDebug
-#      - run:
-#          name: Upload coverage to code climate
-#          command: |
-#            JACOCO_SOURCE_PATH=app/src/main/java
-#            ./cc-test-reporter --debug format-coverage app/build/reports/jacoco/debug/jacoco.xml -t jacoco --prefix /home/rof/src/github.com/simiyu1/JavaDevsNairobi/blob/ft-share-profile-156008359
-#            ./cc-test-reporter --debug upload-coverage
-
       - run:
           name: Generate JaCoCo report
           command: ./gradlew -PciBuild=true clean jacocoTestReportDebug
