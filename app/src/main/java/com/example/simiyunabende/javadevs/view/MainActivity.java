@@ -36,9 +36,10 @@ public class MainActivity extends AppCompatActivity implements GithubUserView.Ma
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
-        // Add swiping and Network checks
+        // Add swiping and Network checks to the activity
         swipeRefreshLayout = findViewById(R.id.ly_swipe_to_refresh);
         networkConnectivityManager = new NetworkConnectivityManager();
+        // Actual swipper
         swipeRefreshLayout.setOnRefreshListener(new SwipeRefreshLayout.OnRefreshListener() {
             @Override
             public void onRefresh() {
